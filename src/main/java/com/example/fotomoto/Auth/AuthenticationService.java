@@ -6,7 +6,9 @@ import com.example.fotomoto.user.User;
 import com.example.fotomoto.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
+        System.out.println("Your log message here");
         var user = User.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
@@ -26,27 +29,26 @@ public class AuthenticationService {
                 .build();
         repository.save(user);
 
-        var jwtToken= jwtService.generateToken(user);
-
+        var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail()
-                        ,
-                        request.getPassword()
-                )
-        );
-        var user = repository.findByEmail(request.getEmail())
-                .orElseThrow();
-        var jwtToken= jwtService.generateToken(user);
+        public AuthenticationResponse authenticate (String username, String password){
+            // Fetch user by username
+            User user = repository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        return AuthenticationResponse.builder()
-                .token(jwtToken)
-                .build();
-    }
+            // Check if the provided password matches the stored password
+            if (!passwordEncoder.matches(password, user.getPassword())) {
+                throw new BadCredentialsException("Incorrect password");
+            }
+
+            // Generate JWT token
+            String jwtToken = jwtService.generateToken(user);
+
+            return AuthenticationResponse.builder().token(jwtToken).build();
+        }
+
+
 }

@@ -24,9 +24,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue
     private Integer id;
-    @Column(name = "email")
     private String email;
-    @Column(name = "password")
     private String password;
 
     @Enumerated(EnumType.STRING)

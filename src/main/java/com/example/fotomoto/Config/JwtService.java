@@ -38,7 +38,7 @@ return extractClaim(token,Claims::getSubject);
                         .setClaims(claims)
                         .setSubject(userDetails.getUsername())
                         .setIssuedAt(new Date(System.currentTimeMillis()))
-                        .setExpiration(new Date(System.currentTimeMillis() + 1000*60*24))
+                        .setExpiration(new Date(System.currentTimeMillis() + 3600000))
                         .signWith(SignatureAlgorithm.HS256, getSignKey())
                         .compact();
 }

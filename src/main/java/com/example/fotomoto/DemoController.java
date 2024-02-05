@@ -6,13 +6,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/auth/demo")
+@RequestMapping("api/v1/secured")
 public class DemoController {
 
 
     @GetMapping
-    public ResponseEntity<String> HEllo(){
-        return ResponseEntity.ok("helll");
+
+    public ResponseEntity<String> sayHi(){
+        return  ResponseEntity.ok("Hiii");
     }
 
 }

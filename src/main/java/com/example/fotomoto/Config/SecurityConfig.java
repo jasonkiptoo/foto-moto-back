@@ -31,7 +31,11 @@ public class SecurityConfig {
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         httpSecurity.authorizeHttpRequests((requests) -> requests
                         //.requestMatchers(mvcMatcherBuilder.pattern("/**")).hasAuthority(TESTER.name())
+//                        .requestMatchers(mvcMatcherBuilder.pattern("/api/v1/auth/authenticate/**")).permitAll()
                         .requestMatchers(mvcMatcherBuilder.pattern("/**")).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern("/api/folders/add-folder")).hasRole("ADMIN")
+//                        .requestMatchers(mvcMatcherBuilder.pattern("/api/folders/add-folder").authenticated()
+
 //                        .requestMatchers(mvcMatcherBuilder.pattern("/v3/api-docs")).permitAll()
 //                        .requestMatchers(mvcMatcherBuilder.pattern("/configuration/**")).permitAll()
 //                        .requestMatchers(mvcMatcherBuilder.pattern("/swagger-ui/**")).permitAll()

@@ -1,5 +1,6 @@
 package com.example.fotomoto.Auth;
 
+import com.example.fotomoto.user.User;
 import com.example.fotomoto.user.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,32 +10,29 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Base64;
+import java.util.List;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-public  class AuthenticationController {
+public class AuthenticationController {
     private final AuthenticationService authenticationService;
     private final UserRepository userRepository; // Inject UserRepository
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(
-            @RequestBody RegisterRequest request
-    ) {
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
         // Check if email exists before registering
         if (userRepository.existsByEmail(request.getEmail())) {
-            String errorMessage = "Email " + request.getEmail() + "already exists";
+            String errorMessage = "Email " + request.getEmail() + " already exists";
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body(new ErrorResponse(errorMessage));
         }
-//        LoginResponseData responseData = new LoginResponseData(userDto, jwtToken);
         AuthenticationResponse registrationResponse = authenticationService.register(request);
         String successMessage = "Registration successful for user: " + request.getEmail();
         return ResponseEntity.ok(new SuccessResponse(successMessage, registrationResponse));
     }
-
 
     @PostMapping("/authenticate")
     public ResponseEntity<?> authenticate(@RequestHeader("Authorization") String authorizationHeader) {
@@ -56,28 +54,31 @@ public  class AuthenticationController {
         return ResponseEntity.ok(new SuccessResponse(successMsg, loginResponse));
     }
 
+    @GetMapping("/get-all-users")
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return ResponseEntity.ok(users);
+    }
 
     // ErrorResponse class for custom error message
     @Data
     @AllArgsConstructor
     private static class ErrorResponse {
         private String message;
-//        private RegistrationResponse data;
     }
-//    success message
+
+    // success message
     @Data
     @AllArgsConstructor
     private static class SuccessResponse {
         private String message;
         private AuthenticationResponse data;
     }
+
     @Data
     @AllArgsConstructor
     public class LoginResponse {
         private boolean success;
         private String message;
-//        private LoginResponseData data;
     }
 }
-
-

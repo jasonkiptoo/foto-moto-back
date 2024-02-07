@@ -41,8 +41,8 @@ public class SecurityConfig {
                         //.requestMatchers(mvcMatcherBuilder.pattern("/**")).hasAuthority(TESTER.name())
                         .requestMatchers(mvcMatcherBuilder.pattern("/auth/authenticate/**")).permitAll()
                         .requestMatchers(mvcMatcherBuilder.pattern("/**")).authenticated()
-                        .requestMatchers(mvcMatcherBuilder.pattern("/auth/folders/add-folder/**")).hasRole("ADMIN")
-                        .requestMatchers(mvcMatcherBuilder.pattern("/auth/folders/get-all-folders/**")).hasRole("USER")
+//                        .requestMatchers(mvcMatcherBuilder.pattern("/auth/folders/add-folder/**")).hasRole("ADMIN")
+//                        .requestMatchers(mvcMatcherBuilder.pattern("/auth/folders/get-all-folders/**")).hasRole("USER")
 //                        .requestMatchers(mvcMatcherBuilder.pattern("/auth/folders/add-folder").has
 //                        .requestMatchers(mvcMatcherBuilder.pattern("/v3/api-docs")).permitAll()
 //                        .requestMatchers(mvcMatcherBuilder.pattern("/configuration/**")).permitAll()

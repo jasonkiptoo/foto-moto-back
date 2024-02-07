@@ -3,6 +3,7 @@ package com.example.fotomoto.Config;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -16,16 +17,18 @@ import java.util.function.Function;
 @Service
 @Component
 public class JwtService {
-    private static final String Secret_key="2bvhQJ7TnyKZseqJVaCBO5rWKnk5m3ax";
+    @Value("${spring.application.secret-key}")
+    private String SECRET_KEY;
+//    private static final String Secret_key="2bvhQJ7TnyKZseqJVaCBO5rWKnk5m3ax";
 
 
     public String extractUsername(String token) {
-return extractClaim(token,Claims::getSubject);
+        return extractClaim(token,Claims::getSubject);
 
     }
 
     public String generateToken( UserDetails userDetails){
-    return generateToken(new HashMap<>() , userDetails);
+        return generateToken(new HashMap<>() , userDetails);
     }
 
 
@@ -46,11 +49,9 @@ return extractClaim(token,Claims::getSubject);
     public boolean isValidToken(String token, UserDetails userDetails){
         final  String username =extractUsername(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
-
-
     }
 
-    private boolean isTokenExpired(String token) {
+    public boolean isTokenExpired(String token) {
         return  extractExpiration(token).before(new  Date());
     }
 
@@ -70,19 +71,11 @@ return extractClaim(token,Claims::getSubject);
                 .parseClaimsJws(token)
                 .getBody();
     }
-
-
-
-
-
 // Assuming Secret_key is a Base64-encoded string representing the secret key
 
     private byte[] getSignKey() {
-        byte[] keyBytes = Base64.getDecoder().decode(Secret_key);
+        byte[] keyBytes = Base64.getDecoder().decode(SECRET_KEY);
 
         return keyBytes;
     }
-
-
-
 }

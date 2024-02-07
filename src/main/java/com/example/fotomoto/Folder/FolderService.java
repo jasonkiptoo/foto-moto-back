@@ -16,7 +16,6 @@ public class FolderService {
     private static final Logger logger = LoggerFactory.getLogger(FolderService.class);
 
     public FolderEntity addFolder(FolderEntity folder) {
-
         log.info("fpolde======== {} ",folder);
         folderRepository.save(folder);
         return folder;

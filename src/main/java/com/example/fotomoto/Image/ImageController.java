@@ -22,6 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("auth/images")
 @RequiredArgsConstructor
+@Slf4j
 public class ImageController {
     private final ImageUploadService imageUploadService;
     private final FolderService folderService;
@@ -40,4 +41,19 @@ public class ImageController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+    @GetMapping("/get-images/{folderId}")
+    public ResponseEntity<?> getImagesByFolderId(@PathVariable Long folderId){
+        try{
+            List<ImageEntity> images = imageUploadService.getImagesByFolderId(folderId);
+            if(images.isEmpty()){
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(images);
+        }
+        catch (Exception e){
+            log.error("Error retrieving Images {}", folderId,e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 }

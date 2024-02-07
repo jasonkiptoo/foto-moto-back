@@ -22,8 +22,7 @@ public class ImageEntity {
     @Lob
     @Column(nullable = false, columnDefinition = "LONGBLOB")
     private byte[] imageData;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "folder_id", nullable = false)
     private FolderEntity folder;
 }

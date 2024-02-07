@@ -30,4 +30,9 @@ public class ImageUploadService {
         image.setFolder(folder);
         return imageRepository.save(image);
     }
+
+//get images in a  folder
+    public List<ImageEntity> getImagesByFolderId(Long folderId) {
+        return imageRepository.findByFolderId(folderId);
+    }
 }

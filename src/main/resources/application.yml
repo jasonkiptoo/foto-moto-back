@@ -17,3 +17,10 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect
   application:
     secret-key: 2bvhQJ7TnyKZseqJVaCBO5rWKnk5m3ax
+
+
+#    image upload size
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB

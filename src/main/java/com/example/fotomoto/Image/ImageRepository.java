@@ -7,5 +7,5 @@ import java.util.List;
 
 @Repository
 public interface ImageRepository extends JpaRepository<ImageEntity,Long> {
-    List<ImageEntity> findByFolderId(Long folderId);
+//    List<ImageEntity> findAll();
 }

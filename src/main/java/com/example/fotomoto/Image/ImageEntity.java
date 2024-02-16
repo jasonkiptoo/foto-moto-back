@@ -19,10 +19,21 @@ public class ImageEntity {
     @Column(nullable = false)
     private String imageName;
 
+    @Column(nullable = false)
+    private String imageType;
+
+
     @Lob
     @Column(nullable = false, columnDefinition = "LONGBLOB")
     private byte[] imageData;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "folder_id", nullable = false)
     private FolderEntity folder;
+
+    public ImageEntity(String imageName, String imageType,byte[] data){
+        this.imageType =imageType;
+        this.imageData =data;
+        this.imageName =imageName;
+
+    }
 }

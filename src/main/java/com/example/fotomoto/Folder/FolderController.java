@@ -33,7 +33,7 @@ public class FolderController {
         return ResponseHandler.responseBuilder("Folder Created Succcessfully", HttpStatus.OK, folder);
     }
         @GetMapping("get-all-folders")
-    public ResponseEntity<Object> getAllFolders() {
+        public ResponseEntity<Object> getAllFolders() {
         List<FolderEntity> folders = folderService.getAllFolders();
         return ResponseHandler.responseBuilder("Folders retrieved successfully", HttpStatus.OK,folders);
     }

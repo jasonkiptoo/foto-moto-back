@@ -30,10 +30,8 @@ public class ImageController {
 //    upload single image to file system
     @PostMapping("/upload/{folderId}")
     public ResponseEntity<Object> uploadImage(
-
             @RequestParam("image") MultipartFile image, @PathVariable Long folderId) throws Exception {
-
-        FolderEntity folder = folderService.getFolderById(folderId);
+            FolderEntity folder = folderService.getFolderById(folderId);
 
         if (folder == null) {
             return ResponseEntity.notFound().build();

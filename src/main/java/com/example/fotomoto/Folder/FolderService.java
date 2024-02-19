@@ -24,9 +24,15 @@
         public List<FolderEntity> getAllFolders() {
             List<FolderEntity> folders = folderRepository.findAll();
             logger.info("Retrieved {} folders", folders.size());
+            folders.forEach(folder -> folder.setFolderImages(null));
             return folders;
         }
         public FolderEntity getFolderById(Long folderId) {
             return folderRepository.findById(folderId).orElse(null);
         }
+
+        public void updateFolder(FolderEntity folder) {
+            folderRepository.save(folder);
+        }
+
     }

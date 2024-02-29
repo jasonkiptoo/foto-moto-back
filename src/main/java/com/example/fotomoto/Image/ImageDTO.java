@@ -1,14 +1,22 @@
 package com.example.fotomoto.Image;
 
-import com.example.fotomoto.Folder.FolderEntity;
-import jakarta.persistence.Column;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class ImageDTO {
 
-    private Long id;
+    private int id;
     private String imageName;
-    private byte[] imageData;
-//    private FolderEntity folder;
+    private byte[] picByte;
+    private String imageType;
+
+    public ImageDTO(String imageName, String imageType, byte[] picByte) {
+        this.imageName = imageName;
+        this.imageType = imageType;
+        this.picByte = picByte;
+    }
+
 }

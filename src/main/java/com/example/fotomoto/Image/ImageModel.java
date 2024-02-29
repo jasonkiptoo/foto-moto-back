@@ -3,14 +3,14 @@ package com.example.fotomoto.Image;
 import jakarta.persistence.*;
 
 @Table(name = "image_model")
-
 @Entity
 
 public class ImageModel {
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
 
-        private Long id;
+
+    private Long id;
     private String name;
     private String type;
 
@@ -20,10 +20,11 @@ public class ImageModel {
 
 
     public ImageModel(String name, String type, byte[] picByte) {
-//        this.name = name;
-//        this.type = type;
-//        this.picByte = picByte;
+        this.name = name;
+        this.type = type;
+        this.picByte = picByte;
     }
+
 
     public Long getId() {
         return id;

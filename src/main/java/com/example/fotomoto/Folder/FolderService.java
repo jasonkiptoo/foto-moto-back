@@ -35,4 +35,9 @@
             folderRepository.save(folder);
         }
 
+        public List<FolderEntity> getLastAccessedFolders() {
+           return folderRepository.findTop3ByOrderByLastAccessedTimeDesc();
+        }
+
+
     }

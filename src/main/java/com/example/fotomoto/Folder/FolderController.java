@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -41,8 +42,6 @@ public class FolderController {
 //        List<FolderEntity> folders = folderService.getAllFolders();
 //        return ResponseHandler.responseBuilder("Folders retrieved successfully", HttpStatus.OK,folders);
 //    }
-
-
     @PostMapping(value = "/{folderId}/add-images", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> addImagesToFolder(
             @PathVariable Long folderId,
@@ -89,35 +88,51 @@ public class FolderController {
             return ResponseHandler.responseBuilder("Error retrieving folders", HttpStatus.INTERNAL_SERVER_ERROR, null);
         }
     }
-
 //    get images in a folder
-
     @GetMapping("get-images-in-folder/{folderId}")
     public ResponseEntity<Object> getImagesByFolderId(@PathVariable Long folderId){
-
         try{
-
             FolderEntity folderEntity =folderService.getFolderById(folderId);
             if(folderEntity==null){
                 String errorMessage= "Folder Id not found"+folderId;
-
                 return ResponseHandler.responseBuilder(errorMessage, HttpStatus.NOT_FOUND, null);
-
             }
+            folderEntity.setLastAccessedTime(LocalDateTime.now());
+            folderService.updateFolder(folderEntity);
 
             Set<ImageModel> images = folderEntity.getFolderImages();
             return ResponseHandler.responseBuilder("Images Retrieved", HttpStatus.OK, images);
+        }
+        catch (Exception e){
+            return ResponseHandler.responseBuilder("Error", HttpStatus.INTERNAL_SERVER_ERROR, null);
+        }
+    }
+
+//    get last accesed folder
+    @GetMapping("/last-accessed-folders")
+    public ResponseEntity<Object>getLastAccessedFolders(){
+
+        try{
+            List<FolderEntity> lastAccessedFolders= folderService.getLastAccessedFolders();
+            for(FolderEntity folder:lastAccessedFolders)
+            {
+                Set<ImageModel> folderImages= folder.getFolderImages();
+                if(!folderImages.isEmpty())
+                {
+                    ImageModel firstImage=folderImages.iterator().next();
+                    folder.setFolderImages(Set.of(firstImage));
+                }
+            }
+
+            return ResponseHandler.responseBuilder("Fetched imaages", HttpStatus.OK, lastAccessedFolders);
 
         }
-
         catch (Exception e){
             return ResponseHandler.responseBuilder("Error", HttpStatus.INTERNAL_SERVER_ERROR, null);
         }
 
 
-
     }
-
 
 
 }

@@ -42,27 +42,27 @@ public class FolderController {
 //        List<FolderEntity> folders = folderService.getAllFolders();
 //        return ResponseHandler.responseBuilder("Folders retrieved successfully", HttpStatus.OK,folders);
 //    }
-    @PostMapping(value = "/{folderId}/add-images", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Object> addImagesToFolder(
-            @PathVariable Long folderId,
-            @RequestPart("imageFiles") MultipartFile[] files) {
-        try {
-            FolderEntity folder = folderService.getFolderById(folderId);
-            if (folder == null) {
-                String errorMessage = "Folder not found with id: " + folderId;
-                return ResponseHandler.responseBuilder(errorMessage, HttpStatus.NOT_FOUND, null);
-            }
-
-            Set<ImageModel> images = uploadImage(files);
-            folder.getFolderImages().addAll(images);
-            folderService.updateFolder(folder);
-
-            return ResponseHandler.responseBuilder("Images added to folder successfully", HttpStatus.OK, folder);
-        } catch (Exception e) {
-            log.error("Error adding images to folder", e);
-            return ResponseHandler.responseBuilder("Error adding images to folder", HttpStatus.INTERNAL_SERVER_ERROR, null);
-        }
-    }
+//    @PostMapping(value = "/{folderId}/add-images", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+//    public ResponseEntity<Object> addImagesToFolder(
+//            @PathVariable Long folderId,
+//            @RequestPart("imageFiles") MultipartFile[] files) {
+//        try {
+//            FolderEntity folder = folderService.getFolderById(folderId);
+//            if (folder == null) {
+//                String errorMessage = "Folder not found with id: " + folderId;
+//                return ResponseHandler.responseBuilder(errorMessage, HttpStatus.NOT_FOUND, null);
+//            }
+//
+//            Set<ImageModel> images = uploadImage(files);
+//            folder.getFolderImages().addAll(images);
+//            folderService.updateFolder(folder);
+//
+//            return ResponseHandler.responseBuilder("Images added to folder successfully", HttpStatus.OK, folder);
+//        } catch (Exception e) {
+//            log.error("Error adding images to folder", e);
+//            return ResponseHandler.responseBuilder("Error adding images to folder", HttpStatus.INTERNAL_SERVER_ERROR, null);
+//        }
+//    }
 
     public Set<ImageModel> uploadImage(MultipartFile[] multipartFiles) throws IOException {
         Set<ImageModel> imageModels =new HashSet<>();
@@ -78,46 +78,46 @@ public class FolderController {
         return imageModels;
     }
 //get all folders in the db
-    @GetMapping("/get-all-folders")
-    public ResponseEntity<Object> getAllFolders() {
-        try {
-            List<FolderEntity> folders = folderService.getAllFolders();
-            return ResponseHandler.responseBuilder("Folders retrieved successfully", HttpStatus.OK, folders);
-        } catch (Exception e) {
-            log.error("Error retrieving folders", e);
-            return ResponseHandler.responseBuilder("Error retrieving folders", HttpStatus.INTERNAL_SERVER_ERROR, null);
-        }
-    }
+//    @GetMapping("/get-all-folders")
+//    public ResponseEntity<Object> getAllFolders() {
+//        try {
+//            List<FolderEntity> folders = folderService.getAllFolders();
+//            return ResponseHandler.responseBuilder("Folders retrieved successfully", HttpStatus.OK, folders);
+//        } catch (Exception e) {
+//            log.error("Error retrieving folders", e);
+//            return ResponseHandler.responseBuilder("Error retrieving folders", HttpStatus.INTERNAL_SERVER_ERROR, null);
+//        }
+//    }
 //    get images in a folder
-    @GetMapping("get-images-in-folder/{folderId}")
-    public ResponseEntity<Object> getImagesByFolderId(@PathVariable Long folderId){
-        try{
-            FolderEntity folderEntity =folderService.getFolderById(folderId);
-            if(folderEntity==null){
-                String errorMessage= "Folder Id not found"+folderId;
-                return ResponseHandler.responseBuilder(errorMessage, HttpStatus.NOT_FOUND, null);
-            }
-            folderEntity.setLastAccessedTime(LocalDateTime.now());
-            folderService.updateFolder(folderEntity);
-
-            Set<ImageModel> images = folderEntity.getFolderImages();
-            return ResponseHandler.responseBuilder("Images Retrieved", HttpStatus.OK, images);
-        }
-        catch (Exception e){
-            return ResponseHandler.responseBuilder("Error", HttpStatus.INTERNAL_SERVER_ERROR, null);
-        }
-    }
+//    @GetMapping("get-images-in-folder/{folderId}")
+//    public ResponseEntity<Object> getImagesByFolderId(@PathVariable Long folderId){
+//        try{
+//            FolderEntity folderEntity =folderService.getFolderById(folderId);
+//            if(folderEntity==null){
+//                String errorMessage= "Folder Id not found"+folderId;
+//                return ResponseHandler.responseBuilder(errorMessage, HttpStatus.NOT_FOUND, null);
+//            }
+//            folderEntity.setLastAccessedTime(LocalDateTime.now());
+//            folderService.updateFolder(folderEntity);
+//
+//            Set<ImageModel> images = folderEntity.getFolderImages();
+//            return ResponseHandler.responseBuilder("Images Retrieved", HttpStatus.OK, images);
+//        }
+//        catch (Exception e){
+//            return ResponseHandler.responseBuilder("Error", HttpStatus.INTERNAL_SERVER_ERROR, null);
+//        }
+//    }
 
 //    get last accesed folder
 
-    @GetMapping("/last-accessed-folders")
-    public ResponseEntity<Object> getLastAccessedFolders() {
-        try {
-            List<FolderDTO> folderDTOs = folderService.getLastAccessedFolders();
-            return ResponseHandler.responseBuilder("Fetched recent images", HttpStatus.OK, folderDTOs);
-        } catch (Exception e) {
-            return ResponseHandler.responseBuilder("Error", HttpStatus.INTERNAL_SERVER_ERROR, null);
-        }
+//    @GetMapping("/last-accessed-folders")
+//    public ResponseEntity<Object> getLastAccessedFolders() {
+//        try {
+//            List<FolderDTO> folderDTOs = folderService.getLastAccessedFolders();
+//            return ResponseHandler.responseBuilder("Fetched recent images", HttpStatus.OK, folderDTOs);
+//        } catch (Exception e) {
+//            return ResponseHandler.responseBuilder("Error", HttpStatus.INTERNAL_SERVER_ERROR, null);
+//        }
     }
 
 
@@ -125,4 +125,4 @@ public class FolderController {
 
 
 
-}
+//}

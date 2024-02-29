@@ -1,21 +1,25 @@
 package com.example.fotomoto.Image;
 
+import com.example.fotomoto.Folder.FolderEntity;
 import jakarta.persistence.*;
+import lombok.Data;
 
-@Table(name = "image_model")
+@Table(name = "images")
 @Entity
+@Data
 
 public class ImageModel {
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long imageId;
 
-
-    private Long id;
+    @ManyToOne
+    private FolderEntity folderEntity;
     private String name;
     private String type;
 
-
     @Column(length = 50000000)
+//    @Lob
     private byte[] picByte;
 
 
@@ -25,40 +29,5 @@ public class ImageModel {
         this.picByte = picByte;
     }
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public byte[] getPicByte() {
-        return picByte;
-    }
-
-    public void setPicByte(byte[] picByte) {
-        this.picByte = picByte;
-    }
-    public ImageModel() {
-        // Default constructor
-    }
 
 }

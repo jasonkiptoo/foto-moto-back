@@ -77,6 +77,6 @@ inverseJoinColumns = {
         @JoinColumn(name = "image_id")
 }
 )
-    private Set<ImageModel> folderImages    ;
+    private Set<ImageModel> folderImages;
 
 }

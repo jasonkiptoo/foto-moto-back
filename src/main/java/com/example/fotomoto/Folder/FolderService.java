@@ -1,11 +1,15 @@
     package com.example.fotomoto.Folder;
+    import com.example.fotomoto.Image.ImageDTO;
+    import com.example.fotomoto.Image.ImageModel;
     import lombok.RequiredArgsConstructor;
     import lombok.extern.slf4j.Slf4j;
     import org.slf4j.Logger;
     import org.slf4j.LoggerFactory;
     import org.springframework.stereotype.Service;
 
+    import java.util.ArrayList;
     import java.util.List;
+    import java.util.Set;
 
     @Service
     @RequiredArgsConstructor
@@ -35,9 +39,23 @@
             folderRepository.save(folder);
         }
 
-        public List<FolderEntity> getLastAccessedFolders() {
-           return folderRepository.findTop3ByOrderByLastAccessedTimeDesc();
+        public List<FolderDTO> getLastAccessedFolders() {
+            List<FolderEntity> folders = folderRepository.findTop4ByOrderByLastAccessedTimeDesc();
+            List<FolderDTO> folderDTOs = new ArrayList<>();
+            for (FolderEntity folder : folders) {
+                int imageCount = folder.getFolderImages().size();
+                ImageDTO folderImageDTO = null;
+                Set<ImageModel> folderImages = folder.getFolderImages();
+                if (!folderImages.isEmpty()) {
+                    ImageModel firstImage = folderImages.iterator().next();
+                    folderImageDTO = new ImageDTO(firstImage.getName(),firstImage.getType(),firstImage.getPicByte());
+                }
+                FolderDTO folderDTO = new FolderDTO(folder.getFolderId(), folder.getFolderName(), folder.getLastAccessedTime(), imageCount, folderImageDTO);
+                folderDTOs.add(folderDTO);
+            }
+            return folderDTOs;
         }
+
 
 
     }

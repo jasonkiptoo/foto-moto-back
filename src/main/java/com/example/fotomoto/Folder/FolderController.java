@@ -109,30 +109,20 @@ public class FolderController {
     }
 
 //    get last accesed folder
+
     @GetMapping("/last-accessed-folders")
-    public ResponseEntity<Object>getLastAccessedFolders(){
-
-        try{
-            List<FolderEntity> lastAccessedFolders= folderService.getLastAccessedFolders();
-            for(FolderEntity folder:lastAccessedFolders)
-            {
-                Set<ImageModel> folderImages= folder.getFolderImages();
-                if(!folderImages.isEmpty())
-                {
-                    ImageModel firstImage=folderImages.iterator().next();
-                    folder.setFolderImages(Set.of(firstImage));
-                }
-            }
-
-            return ResponseHandler.responseBuilder("Fetched imaages", HttpStatus.OK, lastAccessedFolders);
-
-        }
-        catch (Exception e){
+    public ResponseEntity<Object> getLastAccessedFolders() {
+        try {
+            List<FolderDTO> folderDTOs = folderService.getLastAccessedFolders();
+            return ResponseHandler.responseBuilder("Fetched recent images", HttpStatus.OK, folderDTOs);
+        } catch (Exception e) {
             return ResponseHandler.responseBuilder("Error", HttpStatus.INTERNAL_SERVER_ERROR, null);
         }
-
-
     }
+
+
+
+
 
 
 }

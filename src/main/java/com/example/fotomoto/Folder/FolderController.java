@@ -65,7 +65,6 @@ public class FolderController {
                 return ResponseHandler.responseBuilder(errorMessage, HttpStatus.NOT_FOUND, null);
             }
 
-
             // Call the uploadImage method from ImageService to process the files
             List<ImageModel> images = imageService.uploadImage(files);
 
@@ -74,9 +73,7 @@ public class FolderController {
                 image.setFolderEntity(folder);
             }
             imageService.saveAllImages(images);
-
             return ResponseHandler.responseBuilder("Images added to folder successfully", HttpStatus.OK, folder);
-
         } catch (Exception e) {
             log.error("Error adding images to folder", e);
             return ResponseHandler.responseBuilder("Error adding images to folder", HttpStatus.INTERNAL_SERVER_ERROR, null);

@@ -15,7 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class ImageServiceImpl implements ImageService {
 
-    private final ImageRepo imageRepo;
+    private final ImageService imageService;
 
     @Override
     public List<ImageModel> uploadImage(MultipartFile[] files) {
@@ -38,7 +38,7 @@ public class ImageServiceImpl implements ImageService {
     }
     @Override
     public List<ImageModel> saveAllImages(List<ImageModel> images) {
-        return imageRepo.saveAll(images);
+        return imageService.saveAllImages(images);
     }
 
     // Other methods related to image management can be added here

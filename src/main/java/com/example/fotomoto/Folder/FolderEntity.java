@@ -1,12 +1,12 @@
 package com.example.fotomoto.Folder;
 
+import com.example.fotomoto.Image.ImageModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
-
 import java.time.LocalDateTime;
 
 

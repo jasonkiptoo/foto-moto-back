@@ -13,16 +13,17 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-@RequiredArgsConstructor
-@Slf4j
-public class FolderService {
-    private final FolderRepository folderRepository;
-    private static final Logger logger = LoggerFactory.getLogger(FolderService.class);
 
-    public FolderEntity addFolder(FolderEntity folder) {
-        folderRepository.save(folder);
-        return folder;
-    }
+public interface FolderService {
+//    private final FolderRepository folderRepository;
+//    private static final Logger logger = LoggerFactory.getLogger(FolderService.class);
+
+  FolderEntity addFolder(FolderEntity folder);
+  List<FolderEntity> getAllFolders();
+
+  FolderEntity getFolderById(Long folderId);
+
+
 
 //        public List<FolderEntity> getAllFolders() {
 //            List<FolderEntity> folders = folderRepository.findAll();

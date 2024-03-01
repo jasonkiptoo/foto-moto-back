@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -64,17 +65,24 @@ public class FolderController {
                 return ResponseHandler.responseBuilder(errorMessage, HttpStatus.NOT_FOUND, null);
             }
 
-//            Set<ImageModel> images = imageService.uploadImage(files);
-//            folderService.getFolderImages()
-//            folder.getFolderImages().addAll(images);
-//            folderService.updateFolder(folder);
+
+            // Call the uploadImage method from ImageService to process the files
+            List<ImageModel> images = imageService.uploadImage(files);
+
+            // Associate images with the folder and save them to the database
+            for (ImageModel image : images) {
+                image.setFolderEntity(folder);
+            }
+            imageService.saveAllImages(images);
 
             return ResponseHandler.responseBuilder("Images added to folder successfully", HttpStatus.OK, folder);
+
         } catch (Exception e) {
             log.error("Error adding images to folder", e);
             return ResponseHandler.responseBuilder("Error adding images to folder", HttpStatus.INTERNAL_SERVER_ERROR, null);
         }
     }
+
 
 //    public Set<ImageModel> uploadImage(MultipartFile[] multipartFiles) throws IOException {
 //        Set<ImageModel> imageModels =new HashSet<>();

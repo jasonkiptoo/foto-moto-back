@@ -24,8 +24,9 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public void addImage(Long folderId, MultipartFile image) throws IOException {
-        ImageModel  imageModel = new ImageModel();
 
+        ImageModel  imageModel = new ImageModel();
+//        imageModel.setFolderEntity();
         imageModel.setFolderEntity(folderService.findById(folderId));
         imageModel.setName(image.getOriginalFilename());
         imageModel.setPicByte(image.getBytes());

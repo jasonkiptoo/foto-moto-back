@@ -18,6 +18,7 @@ public class ImageModel {
     private Long imageId;
 
     @ManyToOne
+    @JoinColumn(name = "folderId")
     private FolderEntity folderEntity;
     private String name;
     private String type;

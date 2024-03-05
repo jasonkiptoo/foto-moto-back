@@ -12,7 +12,4 @@ public interface FolderRepository extends JpaRepository<FolderEntity, Long> {
     Optional<FolderEntity> findByFolderName(String folderName);
 
     List<FolderEntity> findTop4ByOrderByLastAccessedTimeDesc();
-
-//    @EntityGraph(attributePaths = "folderImages")
-//    Optional<FolderEntity> findByIdWithImages(Long folderId);
 }

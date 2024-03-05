@@ -7,5 +7,6 @@ import java.util.List;
 
 @Repository
 public interface ImageRepo extends JpaRepository<ImageModel, Long> {
-    List<ImageModel> saveAll(List<ImageModel> images);
+//    List<ImageModel> saveAll(List<ImageModel> images);
+
 }

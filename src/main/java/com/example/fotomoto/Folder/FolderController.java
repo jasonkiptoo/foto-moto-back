@@ -28,7 +28,7 @@ import java.util.Set;
 public class FolderController {
     private final FolderService folderService;
     private final FolderRepository folderRepository;
-    private final ImageService imageService;
+//    private final ImageService imageService;
 
 
     //    @Autowired
@@ -38,8 +38,8 @@ public class FolderController {
     @PostMapping("/add-folder")
     public ResponseEntity<Object> addFolder(@RequestBody FolderEntity folder) {
         if (folderRepository.existsByFolderName(folder.getFolderName())) {
-            String errorMessage = "Folder with duplicate name already exists";
-            return ResponseHandler.responseBuilder(errorMessage, HttpStatus.CONFLICT, folder);
+            String errorMessage = "Folder with duplicate name already exists:" + folder.getFolderName();
+            return ResponseHandler.responseBuilder(errorMessage, HttpStatus.CONFLICT, null);
         }
         folderService.addFolder(folder);
         return ResponseHandler.responseBuilder("Folder Created Succcessfully", HttpStatus.OK, folder);
@@ -51,35 +51,37 @@ public class FolderController {
         List<FolderEntity> folders = folderService.getAllFolders();
         return ResponseHandler.responseBuilder("Folders Retrieved Successfully", HttpStatus.OK, folders);
     }
+
+
+
+
+
 //    add images to a folder
-
-
-    @PostMapping(value = "/{folderId}/add-images", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Object> addImagesToFolder(
-            @PathVariable Long folderId,
-            @RequestPart("imageFiles") MultipartFile[] files) {
-        try {
-            FolderEntity folder = folderService.getFolderById(folderId);
-            if (folder == null) {
-                String errorMessage = "Folder not found with id: " + folderId;
-                return ResponseHandler.responseBuilder(errorMessage, HttpStatus.NOT_FOUND, null);
-            }
-
-            // Call the uploadImage method from ImageService to process the files
-            List<ImageModel> images = imageService.uploadImage(files);
-
-            // Associate images with the folder and save them to the database
-            for (ImageModel image : images) {
-                image.setFolderEntity(folder);
-            }
-            imageService.saveAllImages(images);
-            return ResponseHandler.responseBuilder("Images added to folder successfully", HttpStatus.OK, folder);
-        } catch (Exception e) {
-            log.error("Error adding images to folder", e);
-            return ResponseHandler.responseBuilder("Error adding images to folder", HttpStatus.INTERNAL_SERVER_ERROR, null);
-        }
-    }
-
+//    @PostMapping(value = "/{folderId}/add-images", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+//    public ResponseEntity<Object> addImagesToFolder(
+//            @PathVariable Long folderId,
+//            @RequestPart("imageFiles") MultipartFile[] files) {
+//        try {
+//            FolderEntity folder = folderService.getFolderById(folderId);
+//            if (folder == null) {
+//                String errorMessage = "Folder not found with id: " + folderId;
+//                return ResponseHandler.responseBuilder(errorMessage, HttpStatus.NOT_FOUND, null);
+//            }
+//            // Call the uploadImage method from ImageService to process the files
+//            List<ImageModel> images = imageService.uploadImage(files);
+//
+//            // Associate images with the folder and save them to the database
+//            for (ImageModel image : images) {
+//                image.setFolderEntity(folder);
+//            }
+//            imageService.saveAllImages(images);
+//            return ResponseHandler.responseBuilder("Images added to folder successfully", HttpStatus.OK, folder);
+//        } catch (Exception e) {
+//            log.error("Error adding images to folder", e);
+//            return ResponseHandler.responseBuilder("Error adding images to folder", HttpStatus.INTERNAL_SERVER_ERROR, null);
+//        }
+//    }
+//
 
 //    public Set<ImageModel> uploadImage(MultipartFile[] multipartFiles) throws IOException {
 //        Set<ImageModel> imageModels =new HashSet<>();

@@ -1,16 +1,8 @@
 package com.example.fotomoto.Folder;
 
-import com.example.fotomoto.Image.ImageDTO;
-import com.example.fotomoto.Image.ImageModel;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 
@@ -21,7 +13,9 @@ public interface FolderService {
   FolderEntity addFolder(FolderEntity folder);
   List<FolderEntity> getAllFolders();
 
-  FolderEntity getFolderById(Long folderId);
+//  FolderEntity getFolderById(Long folderId);
+
+  FolderEntity findById(Long folderId);
 
 
 

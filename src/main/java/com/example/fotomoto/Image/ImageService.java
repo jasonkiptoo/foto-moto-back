@@ -1,15 +1,16 @@
-package com.example.fotomoto.Image;
+    package com.example.fotomoto.Image;
 
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+    import org.springframework.stereotype.Service;
+    import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.Set;
+    import java.io.IOException;
+    import java.util.List;
+    import java.util.Set;
 
-@Service
-public interface ImageService {
+    @Service
+    public interface ImageService {
+        boolean findById(Long folderId);
 
-    List<ImageModel> uploadImage(MultipartFile[] files);
+        void addImage(Long folderId, MultipartFile image) throws IOException;
 
-    List<ImageModel> saveAllImages(List<ImageModel> images);
-}
+    }

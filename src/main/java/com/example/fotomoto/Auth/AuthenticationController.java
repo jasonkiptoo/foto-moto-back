@@ -2,6 +2,7 @@ package com.example.fotomoto.Auth;
 
 import com.example.fotomoto.Responses.AuthenticationResponse;
 import com.example.fotomoto.Responses.RegisterResponse;
+import com.example.fotomoto.Responses.ResponseHandler;
 import com.example.fotomoto.user.User;
 import com.example.fotomoto.user.UserRepository;
 import lombok.AllArgsConstructor;
@@ -40,7 +41,7 @@ public class AuthenticationController {
         }
         AuthenticationResponse registrationResponse = authenticationService.register(request);
         String successMessage = "Registration successful for user: " + request.getEmail();
-        return ResponseEntity.ok(new SuccessResponse(successMessage, registrationResponse));
+        return  ResponseHandler.responseBuilder(successMessage, HttpStatus.OK, registrationResponse);
     }
 
     @PostMapping("/authenticate")
@@ -59,12 +60,13 @@ public class AuthenticationController {
         String[] parts = credentials.split(":", 2); // Split into username and password
         String username = parts[0];
         String password = parts[1];
+//        ResponseHandler responseHandler = new ResponseHandler()
 
         AuthenticationResponse loginResponse = authenticationService.authenticate(username, password);
-        log.info("suser {}",username);
-        log.info("pass {}",password);
+        log.info("user {}",username);
+//        log.info("pass {}",password);
         String successMsg = "User Logged in Successful: " + username;
-        return ResponseEntity.ok(new SuccessResponse(successMsg, loginResponse));
+        return  ResponseHandler.responseBuilder(successMsg, HttpStatus.OK, loginResponse);
     }
 
     @GetMapping("/get-all-users")
@@ -72,26 +74,10 @@ public class AuthenticationController {
         List<User> users = userRepository.findAll();
         return ResponseEntity.ok(users);
     }
-
     // ErrorResponse class for custom error message
     @Data
     @AllArgsConstructor
     private static class ErrorResponse {
-        private String message;
-    }
-
-    // success message
-    @Data
-    @AllArgsConstructor
-    private static class SuccessResponse {
-        private String message;
-        private AuthenticationResponse data;
-    }
-
-    @Data
-    @AllArgsConstructor
-    public class LoginResponse {
-        private boolean success;
         private String message;
     }
 }

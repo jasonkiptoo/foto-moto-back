@@ -27,7 +27,7 @@ import java.util.Set;
 @Slf4j
 public class FolderController {
     private final FolderService folderService;
-    private final FolderRepository folderRepository;
+//    private final FolderRepository folderRepository;
 //    private final ImageService imageService;
 
 
@@ -37,12 +37,14 @@ public class FolderController {
 //    }
     @PostMapping("/add-folder")
     public ResponseEntity<Object> addFolder(@RequestBody FolderEntity folder) {
-        if (folderRepository.existsByFolderName(folder.getFolderName())) {
-            String errorMessage = "Folder with duplicate name already exists:" + folder.getFolderName();
-            return ResponseHandler.responseBuilder(errorMessage, HttpStatus.CONFLICT, null);
-        }
-        folderService.addFolder(folder);
-        return ResponseHandler.responseBuilder("Folder Created Succcessfully", HttpStatus.OK, folder);
+
+       try{
+           folderService.addFolder(folder);
+           return ResponseHandler.responseBuilder("Folder added ", HttpStatus.OK, null);
+       }
+       catch (Exception e){
+          return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+       }
     }
 
     //    get  all existing folders

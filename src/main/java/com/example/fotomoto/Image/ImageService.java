@@ -12,5 +12,6 @@
         boolean findById(Long folderId);
 
         void addImage(Long folderId, MultipartFile image) throws IOException;
+        List<ImageModel> getAllImages(Long folderId);
 
     }

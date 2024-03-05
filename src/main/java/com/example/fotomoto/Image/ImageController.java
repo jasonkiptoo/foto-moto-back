@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("images")
@@ -22,15 +24,27 @@ public class ImageController {
     @PostMapping(value = "/add-images-to-folder/{folderId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> addImagesToFolder(
             @PathVariable Long folderId,
-                      @RequestPart("imageFiles") MultipartFile image) {
-        try{
+            @RequestPart("imageFiles") MultipartFile image) {
+        try {
             imageService.addImage(folderId, image);
             return ResponseHandler.responseBuilder("", HttpStatus.OK, null);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
 
     }
+
+
+    //    geet images in a folder
+    @GetMapping("/get-images/{folderId}")
+    public ResponseEntity<?> getFolderImages(@PathVariable Long folderId) {
+        try {
+            List<ImageModel> images = imageService.getAllImages(folderId);
+            return ResponseHandler.responseBuilder("Images in the folder retrieved successfully", HttpStatus.OK, images);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

@@ -19,13 +19,5 @@ public class FolderDTO {
     // Other fields as needed
     private ImageDTO folderImages;
 
-    public FolderDTO(Long folderId, String folderName, LocalDateTime lastAccessedTime, int imageCount, ImageDTO folderImages) {
-        this.folderId = folderId;
-        this.folderName = folderName;
-//        this.lastAccessedTime = lastAccessedTime;
-        this.imageCount = imageCount;
 
-        this.folderImages=folderImages;
-
-    }
 }

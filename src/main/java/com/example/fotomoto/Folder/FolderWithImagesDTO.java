@@ -6,6 +6,7 @@ import com.example.fotomoto.Image.ImageModel;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 public class FolderWithImagesDTO {
@@ -18,4 +19,7 @@ public class FolderWithImagesDTO {
     public FolderWithImagesDTO() {
     }
 
+    public Set<ImageModel> getFolderImages() {
+        return null;
+    }
 }

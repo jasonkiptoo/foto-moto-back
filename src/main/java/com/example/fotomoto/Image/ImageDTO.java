@@ -8,12 +8,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ImageDTO {
 
-    private int id;
+    private Long imageId;
     private String imageName;
     private byte[] picByte;
     private String imageType;
 
-    public ImageDTO(String imageName, String imageType, byte[] picByte) {
+
+    public ImageDTO(Long imageId, String imageName, String imageType, byte[] picByte) {
+        this.imageId = imageId;
         this.imageName = imageName;
         this.imageType = imageType;
         this.picByte = picByte;

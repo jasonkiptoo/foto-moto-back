@@ -1,6 +1,7 @@
 package com.example.fotomoto.Folder;
 
 import com.example.fotomoto.Config.JwtService;
+import com.example.fotomoto.Image.ImageDTO;
 import com.example.fotomoto.Image.ImageModel;
 import com.example.fotomoto.Image.ImageService;
 import com.example.fotomoto.Responses.ResponseHandler;
@@ -37,14 +38,12 @@ public class FolderController {
 //    }
     @PostMapping("/add-folder")
     public ResponseEntity<Object> addFolder(@RequestBody FolderEntity folder) {
-
-       try{
-           folderService.addFolder(folder);
-           return ResponseHandler.responseBuilder("Folder added ", HttpStatus.OK, null);
-       }
-       catch (Exception e){
-          return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
-       }
+        try {
+            folderService.addFolder(folder);
+            return ResponseHandler.responseBuilder("Folder added ", HttpStatus.OK, null);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     //    get  all existing folders
@@ -54,6 +53,12 @@ public class FolderController {
         return ResponseHandler.responseBuilder("Folders Retrieved Successfully", HttpStatus.OK, folders);
     }
 
+    //    fetcch recent accessed
+    @GetMapping("/recently-accessed-folders")
+    public ResponseEntity<Object> getRecentAccessedFoldersWithImages() {
+        List<FolderDTO> folders = folderService.getRecentAccessedWithImages();
+        return ResponseEntity.ok().body(folders);
+    }
 
 
 

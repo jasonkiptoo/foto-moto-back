@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,9 +45,14 @@ public class ImageServiceImpl implements ImageService {
             log.info("SCd found folderId {}");
             List<ImageModel> images= imageRepo.findAllByFolderEntity(folder);
 
-            List<ImageDTO> imageDTOs = images.stream()
-                    .map(image -> new ImageDTO(image.getName(), image.getType(), image.getPicByte()))
-                    .collect(Collectors.toList());
+            List<ImageDTO> imageDTOs = new ArrayList<>();
+            for (ImageModel image : images) {
+                ImageDTO imageDTO = new ImageDTO(image.getImageId(),image.getName(), image.getType(), image.getPicByte());
+                imageDTOs.add(imageDTO);
+            }
+//set recently accesde folder time on opening
+            folder.setLastAccessedTime(LocalDateTime.now());
+            folderService.UpdateFolder(folder);
 
             FolderWithImagesDTO folderWithImagesDTO= new FolderWithImagesDTO();
 

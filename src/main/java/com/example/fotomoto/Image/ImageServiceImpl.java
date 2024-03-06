@@ -1,45 +1,57 @@
 package com.example.fotomoto.Image;
 
+import com.example.fotomoto.Folder.FolderEntity;
+import com.example.fotomoto.Folder.FolderService;
+import com.example.fotomoto.Folder.FolderWithImagesDTO;
+import com.example.fotomoto.Responses.ResponseHandler;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ImageServiceImpl implements ImageService {
 
     private final ImageRepo imageRepo;
+    private final FolderService folderService;
 
     @Override
-    public List<ImageModel> uploadImage(MultipartFile[] files) {
-        List<ImageModel> images = new ArrayList<>();
+    public boolean findById(Long folderId) {
+        return false;
+    }
 
-        for (MultipartFile file : files) {
-            try {
-                String fileName = file.getOriginalFilename();
-                String fileType = file.getContentType();
-                byte[] fileBytes = file.getBytes();
+    @Override
+    public void addImage(Long folderId, MultipartFile image) throws IOException {
+        ImageModel imageModel = new ImageModel();
+        imageModel.setFolderEntity(folderService.findById(folderId));
+        imageModel.setName(image.getOriginalFilename());
+        imageModel.setPicByte(image.getBytes());
+        imageModel.setType(image.getContentType());
+        imageRepo.save(imageModel);
+    }
 
-                ImageModel image = new ImageModel(fileName, fileType, fileBytes);
-                images.add(image);
-            } catch (IOException e) {
-                // Handle file processing error
-                e.printStackTrace();
-            }
+    @Override
+    public List<FolderWithImagesDTO> getAllImages(Long folderId) {
+        FolderEntity folder = folderService.findById(folderId);
+        if (folder != null) {
+            log.info("SCd found folderId {}");
+            List<ImageModel> images= imageRepo.findAllByFolderEntity(folder);
+
+            FolderWithImagesDTO folderWithImagesDTO= new FolderWithImagesDTO();
+
+            folderWithImagesDTO.setFolderId(folder.getFolderId());
+            folderWithImagesDTO.setFolderName(folder.getFolderName());
+            folderWithImagesDTO.setImages(images);
+            return List.of(folderWithImagesDTO);
+//            return ResponseHandler.responseBuilder("",HttpStatus.OK,null);
+
+
         }
-        return images;
+    return List.of();
     }
-    @Override
-    public List<ImageModel> saveAllImages(List<ImageModel> images) {
-        return imageRepo.saveAll(images);
-    }
-
-    // Other methods related to image management can be added here
 }

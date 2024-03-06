@@ -11,7 +11,7 @@ import java.util.List;
 public class FolderWithImagesDTO {
     private Long folderId;
     private String folderName;
-    private List<ImageModel> images;
+    private List<ImageDTO> images;
 
     // Constructors, getters, and setters
 

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -42,11 +43,15 @@ public class ImageServiceImpl implements ImageService {
             log.info("SCd found folderId {}");
             List<ImageModel> images= imageRepo.findAllByFolderEntity(folder);
 
+            List<ImageDTO> imageDTOs = images.stream()
+                    .map(image -> new ImageDTO(image.getName(), image.getType(), image.getPicByte()))
+                    .collect(Collectors.toList());
+
             FolderWithImagesDTO folderWithImagesDTO= new FolderWithImagesDTO();
 
             folderWithImagesDTO.setFolderId(folder.getFolderId());
             folderWithImagesDTO.setFolderName(folder.getFolderName());
-            folderWithImagesDTO.setImages(images);
+            folderWithImagesDTO.setImages(imageDTOs);
             return List.of(folderWithImagesDTO);
 //            return ResponseHandler.responseBuilder("",HttpStatus.OK,null);
 

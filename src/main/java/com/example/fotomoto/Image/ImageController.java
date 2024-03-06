@@ -3,6 +3,7 @@ package com.example.fotomoto.Image;
 import com.example.fotomoto.Folder.FolderEntity;
 import com.example.fotomoto.Folder.FolderRepository;
 import com.example.fotomoto.Folder.FolderService;
+import com.example.fotomoto.Folder.FolderWithImagesDTO;
 import com.example.fotomoto.Responses.ResponseHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -39,11 +40,12 @@ public class ImageController {
     //    geet images in a folder
     @GetMapping("/get-images/{folderId}")
     public ResponseEntity<?> getFolderImages(@PathVariable Long folderId) {
+
         try {
-            List<ImageModel> images = imageService.getAllImages(folderId);
+            List<FolderWithImagesDTO> images = imageService.getAllImages(folderId);
             return ResponseHandler.responseBuilder("Images in the folder retrieved successfully", HttpStatus.OK, images);
         } catch (Exception e) {
-            return new ResponseEntity<>("Error", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Error getting images", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -2,6 +2,7 @@ package com.example.fotomoto.Image;
 
 import com.example.fotomoto.Folder.FolderEntity;
 import com.example.fotomoto.Folder.FolderService;
+import com.example.fotomoto.Folder.FolderWithImagesDTO;
 import com.example.fotomoto.Responses.ResponseHandler;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,14 +36,22 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public List<ImageModel> getAllImages(Long folderId) {
+    public List<FolderWithImagesDTO> getAllImages(Long folderId) {
         FolderEntity folder = folderService.findById(folderId);
         if (folder != null) {
-            log.info("Fetching all images in folder {}", folderId);
-//            return ResponseHandler.responseBuilder("all folder images here", HttpStatus.OK, folder);
+            log.info("SCd found folderId {}");
+            List<ImageModel> images= imageRepo.findAllByFolderEntity(folder);
 
-                return imageRepo.findAllByFolderEntity(folder);
+            FolderWithImagesDTO folderWithImagesDTO= new FolderWithImagesDTO();
+
+            folderWithImagesDTO.setFolderId(folder.getFolderId());
+            folderWithImagesDTO.setFolderName(folder.getFolderName());
+            folderWithImagesDTO.setImages(images);
+            return List.of(folderWithImagesDTO);
+//            return ResponseHandler.responseBuilder("",HttpStatus.OK,null);
+
+
         }
-        return null;
+    return List.of();
     }
 }

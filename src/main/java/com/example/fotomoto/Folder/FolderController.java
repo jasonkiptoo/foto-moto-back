@@ -56,7 +56,7 @@ public class FolderController {
     //    fetcch recent accessed
     @GetMapping("/recently-accessed-folders")
     public ResponseEntity<Object> getRecentAccessedFoldersWithImages() {
-        List<FolderDTO> folders = folderService.getRecentAccessedWithImages();
+        List<FolderWithImagesDTO> folders = folderService.getRecentAccessedWithImages();
         return ResponseEntity.ok().body(folders);
     }
 

@@ -1,12 +1,15 @@
     package com.example.fotomoto.Folder;
 
     import com.example.fotomoto.CustomException;
+    import com.example.fotomoto.Image.ImageModel;
+    import com.example.fotomoto.Image.ImageRepo;
     import com.example.fotomoto.Responses.ResponseHandler;
     import lombok.AllArgsConstructor;
     import org.springframework.http.HttpStatus;
     import org.springframework.stereotype.Service;
 
     import java.util.List;
+    import java.util.stream.Collectors;
 
     @Service
     @AllArgsConstructor
@@ -14,6 +17,8 @@
     public class FolderServiceImp implements FolderService{
 
         private final FolderRepository folderRepo;
+        private final ImageRepo imageRepo;
+
         @Override
         public FolderEntity addFolder(FolderEntity folder) {
 
@@ -42,10 +47,14 @@
         }
 
         @Override
-        public List<FolderDTO> getRecentAccessedWithImages() {
+        public List<FolderWithImagesDTO> getRecentAccessedWithImages() {
             List<FolderEntity> recentFolders = folderRepo.findTop4ByOrderByLastAccessedTimeDesc();
-
-            return recentFolders;
+            return recentFolders.stream()
+                    .map(folder -> {
+                        List<ImageModel> images = imageRepo.findAllByFolderEntity(folder);
+                        return new FolderWithImagesDTO(folder, images);
+                    })
+                    .collect(Collectors.toList());
         }
 
 

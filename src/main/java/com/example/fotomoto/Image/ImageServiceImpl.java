@@ -3,17 +3,14 @@ package com.example.fotomoto.Image;
 import com.example.fotomoto.Folder.FolderEntity;
 import com.example.fotomoto.Folder.FolderService;
 import com.example.fotomoto.Folder.FolderWithImagesDTO;
-import com.example.fotomoto.Responses.ResponseHandler;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -45,7 +42,7 @@ public class ImageServiceImpl implements ImageService {
             log.info("SCd found folderId {}");
             List<ImageModel> images= imageRepo.findAllByFolderEntity(folder);
 
-            List<ImageDTO> imageDTOs = new ArrayList<>();
+            List<ImageModel> imageDTOs = new ArrayList<>();
             for (ImageModel image : images) {
                 ImageDTO imageDTO = new ImageDTO(image.getImageId(),image.getName(), image.getType(), image.getPicByte());
                 imageDTOs.add(imageDTO);
@@ -54,7 +51,7 @@ public class ImageServiceImpl implements ImageService {
             folder.setLastAccessedTime(LocalDateTime.now());
             folderService.UpdateFolder(folder);
 
-            FolderWithImagesDTO folderWithImagesDTO= new FolderWithImagesDTO();
+            FolderWithImagesDTO folderWithImagesDTO= new FolderWithImagesDTO(folder, images);
 
             folderWithImagesDTO.setFolderId(folder.getFolderId());
             folderWithImagesDTO.setFolderName(folder.getFolderName());

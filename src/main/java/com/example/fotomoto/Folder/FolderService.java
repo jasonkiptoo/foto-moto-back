@@ -14,5 +14,5 @@ public interface FolderService {
   FolderEntity UpdateFolder(FolderEntity folder);
 //  List<FolderEntity> getRecentAccessedWithImages();
 
-  List<FolderDTO> getRecentAccessedWithImages();
+  List<FolderWithImagesDTO> getRecentAccessedWithImages();
 }

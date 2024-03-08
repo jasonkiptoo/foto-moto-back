@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class ImageDTO {
+public class ImageDTO extends ImageModel {
 
     private Long imageId;
     private String imageName;

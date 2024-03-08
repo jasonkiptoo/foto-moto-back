@@ -1,7 +1,7 @@
 package com.example.fotomoto.Folder;
 
 
-import com.example.fotomoto.Image.ImageModel;
+import com.example.fotomoto.Image.ImageDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -13,11 +13,10 @@ import java.util.Set;
 public class FolderWithImagesDTO {
     private Long folderId;
     private String folderName;
-    private List<ImageModel> images;
+    private List<ImageDTO> images;
 
     // Constructors, getters, and setters
-
-    public FolderWithImagesDTO(FolderEntity folder, List<ImageModel> images) {
+    public FolderWithImagesDTO(FolderEntity folder) {
         this.folderId = folder.getFolderId();
         this.folderName = folder.getFolderName();
         this.images = images;

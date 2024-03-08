@@ -14,10 +14,10 @@ public class FolderDTO {
     private Long folderId;
     private String folderName;
     private int imageCount;
-    private List<ImageDTO> folderImages;
+    private ImageDTO folderImages;
     // Other fields as needed
 
-    public FolderDTO(Long folderId, String folderName, int imageCount, List<ImageDTO> folderImages) {
+    public FolderDTO(Long folderId, String folderName, int imageCount, ImageDTO folderImages) {
         this.folderId = folderId;
         this.folderName = folderName;
         this.imageCount = imageCount;

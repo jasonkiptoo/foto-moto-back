@@ -49,9 +49,16 @@ public class FolderServiceImp implements FolderService {
     public List<FolderDTO> getRecentAccessedWithImages() {
         List<FolderEntity> recentFolders = folderRepo.findTop4ByOrderByLastAccessedTimeDesc();
         return recentFolders.stream().map(folder -> {
+
             List<ImageModel> images = imageRepo.findAllByFolderEntity(folder);
-            List<ImageDTO> imageDTOs = images.stream().map(imageModel -> new ImageDTO(imageModel.getImageId(), imageModel.getName(), imageModel.getType(), imageModel.getPicByte())).collect(Collectors.toList());
-            return new FolderDTO(folder.getFolderId(), folder.getFolderName(), imageDTOs.size(), imageDTOs);
+            ImageDTO imageDTO=null;
+            if(!images.isEmpty()){
+                ImageModel firstImage= images.get(0);
+                imageDTO= new ImageDTO(firstImage.getImageId(),firstImage.getType(),firstImage.getName(), firstImage.getPicByte());
+
+            }
+//            List<ImageDTO> imageDTOs = images.stream().map(imageModel -> new ImageDTO(imageModel.getImageId(), imageModel.getName(), imageModel.getType(), imageModel.getPicByte())).collect(Collectors.toList());
+            return new FolderDTO(folder.getFolderId(), folder.getFolderName(), images.size(), imageDTO);
         }).collect(Collectors.toList());
     }
 

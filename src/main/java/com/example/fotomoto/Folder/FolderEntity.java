@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Entity
@@ -44,7 +45,8 @@ public class FolderEntity {
     @Column(name = "last_accessed_time")
     private LocalDateTime lastAccessedTime;
 
-
+//    @OneToMany(mappedBy = "folder", cascade = CascadeType.ALL)
+//    private List<ImageModel> folderImages;
 
 //    @OneToMany(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "folderId")

@@ -7,10 +7,12 @@ import java.util.List;
 @Service
 
 public interface FolderService {
-//    private final FolderRepository folderRepository;
-//    private static final Logger logger = LoggerFactory.getLogger(FolderService.class);
 
   FolderEntity addFolder(FolderEntity folder);
   List<FolderEntity> getAllFolders();
   FolderEntity findById(Long folderId);
+  FolderEntity UpdateFolder(FolderEntity folder);
+//  List<FolderEntity> getRecentAccessedWithImages();
+
+  List<FolderWithImagesDTO> getRecentAccessedWithImages();
 }

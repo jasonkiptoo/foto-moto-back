@@ -6,14 +6,16 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class ImageDTO {
+public class ImageDTO extends ImageModel {
 
-    private int id;
+    private Long imageId;
     private String imageName;
     private byte[] picByte;
     private String imageType;
 
-    public ImageDTO(String imageName, String imageType, byte[] picByte) {
+
+    public ImageDTO(Long imageId, String imageName, String imageType, byte[] picByte) {
+        this.imageId = imageId;
         this.imageName = imageName;
         this.imageType = imageType;
         this.picByte = picByte;

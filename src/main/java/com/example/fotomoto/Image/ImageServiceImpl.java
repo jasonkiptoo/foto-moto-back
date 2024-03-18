@@ -39,19 +39,18 @@ public class ImageServiceImpl implements ImageService {
     public List<FolderWithImagesDTO> getAllImages(Long folderId) {
         FolderEntity folder = folderService.findById(folderId);
         if (folder != null) {
-            log.info("SCd found folderId {}");
+            log.info("SCd found folderId {}:", folderId);
             List<ImageModel> images= imageRepo.findAllByFolderEntity(folder);
-
-            List<ImageModel> imageDTOs = new ArrayList<>();
+            List<ImageDTO> imageDTOs = new ArrayList<>();
             for (ImageModel image : images) {
-                ImageDTO imageDTO = new ImageDTO(image.getImageId(),image.getName(), image.getType(), image.getPicByte());
+                ImageDTO imageDTO = new ImageDTO(image.getImageId(),image.getName(), image.getType(),image.getPicByte());
                 imageDTOs.add(imageDTO);
             }
 //set recently accesde folder time on opening
             folder.setLastAccessedTime(LocalDateTime.now());
             folderService.UpdateFolder(folder);
 
-            FolderWithImagesDTO folderWithImagesDTO= new FolderWithImagesDTO(folder, images);
+            FolderWithImagesDTO folderWithImagesDTO= new FolderWithImagesDTO(folder);
 
             folderWithImagesDTO.setFolderId(folder.getFolderId());
             folderWithImagesDTO.setFolderName(folder.getFolderName());

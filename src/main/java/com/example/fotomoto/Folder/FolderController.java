@@ -28,14 +28,7 @@ import java.util.Set;
 @Slf4j
 public class FolderController {
     private final FolderService folderService;
-//    private final FolderRepository folderRepository;
-//    private final ImageService imageService;
 
-
-    //    @Autowired
-//    public FolderController(FolderService folderService) {
-//        this.folderService = folderService;
-//    }
     @PostMapping("/add-folder")
     public ResponseEntity<Object> addFolder(@RequestBody FolderEntity folder) {
         try {
@@ -53,11 +46,11 @@ public class FolderController {
         return ResponseHandler.responseBuilder("Folders Retrieved Successfully", HttpStatus.OK, folders);
     }
 
-    //    fetcch recent accessed
+    //    fetch recent accessed
     @GetMapping("/recently-accessed-folders")
     public ResponseEntity<Object> getRecentAccessedFoldersWithImages() {
-        List<FolderWithImagesDTO> folders = folderService.getRecentAccessedWithImages();
-        return ResponseEntity.ok().body(folders);
+        List<FolderDTO> folders = folderService.getRecentAccessedWithImages();
+        return ResponseHandler.responseBuilder("Most Recent folders", HttpStatus.OK, folders);
     }
 
 
@@ -114,25 +107,7 @@ public class FolderController {
 //            return ResponseHandler.responseBuilder("Error retrieving folders", HttpStatus.INTERNAL_SERVER_ERROR, null);
 //        }
 //    }
-//    get images in a folder
-//    @GetMapping("get-images-in-folder/{folderId}")
-//    public ResponseEntity<Object> getImagesByFolderId(@PathVariable Long folderId){
-//        try{
-//            FolderEntity folderEntity =folderService.getFolderById(folderId);
-//            if(folderEntity==null){
-//                String errorMessage= "Folder Id not found"+folderId;
-//                return ResponseHandler.responseBuilder(errorMessage, HttpStatus.NOT_FOUND, null);
-//            }
-//            folderEntity.setLastAccessedTime(LocalDateTime.now());
-//            folderService.updateFolder(folderEntity);
 //
-//            Set<ImageModel> images = folderEntity.getFolderImages();
-//            return ResponseHandler.responseBuilder("Images Retrieved", HttpStatus.OK, images);
-//        }
-//        catch (Exception e){
-//            return ResponseHandler.responseBuilder("Error", HttpStatus.INTERNAL_SERVER_ERROR, null);
-//        }
-//    }
 
 //    get last accesed folder
 

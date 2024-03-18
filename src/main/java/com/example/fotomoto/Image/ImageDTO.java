@@ -1,12 +1,11 @@
 package com.example.fotomoto.Image;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class ImageDTO extends ImageModel {
+public class ImageDTO  {
 
     private Long imageId;
     private String imageName;

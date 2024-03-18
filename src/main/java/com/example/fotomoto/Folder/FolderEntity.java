@@ -45,23 +45,4 @@ public class FolderEntity {
     @Column(name = "last_accessed_time")
     private LocalDateTime lastAccessedTime;
 
-//    @OneToMany(mappedBy = "folder", cascade = CascadeType.ALL)
-//    private List<ImageModel> folderImages;
-
-//    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "folderId")
-//    private Set<ImageModel> folderImages;
-
-
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JoinTable(name = "folder_images",
-//            joinColumns = {
-//                    @JoinColumn(name = "folder_id")
-//            },
-//
-//            inverseJoinColumns = {
-//                    @JoinColumn(name = "image_id")
-//            }
-//    )
-
 }

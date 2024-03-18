@@ -14,7 +14,4 @@ public class ResponseClass {
     private String imageType;
     private long imageSize;
 
-//    public ResponseClass(String imageName, String downloadUrl, String imageType, long imageSize) {
-//
-//    }
 }
